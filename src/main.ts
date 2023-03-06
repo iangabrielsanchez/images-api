@@ -9,8 +9,12 @@ import {
   SwaggerCustomOptions,
 } from '@nestjs/swagger';
 import { glob } from 'glob';
+import mongoose from 'mongoose';
+import config from './config';
 
 async function bootstrap() {
+  await mongoose.connect(config.mongodb.host);
+
   const port = 3000;
   const app = await NestFactory.create(AppModule, {
     logger: ['log', 'error', 'warn'],
@@ -58,4 +62,4 @@ async function getExtraModels(): Promise<Function[]> {
     });
   }
   return functionsToExpose;
-};
+}
